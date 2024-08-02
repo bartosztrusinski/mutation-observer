@@ -11,6 +11,8 @@ body {
 }
 
 button {
+  display: block;
+  margin: 2rem auto;
   background-color: #333;
   color: #f4f4f4;
   font-size: 1rem;
@@ -19,13 +21,33 @@ button {
   cursor: pointer;
 }
 
-button:not(:disabled):hover {
+button:hover {
   background-color: #444;
 }
 
 main {
+  width: min(100%, 40rem);
+  margin: 1rem auto;
+}
+.count {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  text-align: right;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.posts article {
   display: flex;
   flex-direction: column;
-  width: min(100%, 24rem);
-  margin: 1rem auto;
+  gap: 0.5rem;
+  line-height: 1.4;
+  color: #111;
+  padding: 1rem;
+  border-radius: 0.4rem;
 }
