@@ -13,13 +13,16 @@ const backgroundColors = [
 
 const observer = new MutationObserver((mutations) => {
   for (const mutation of mutations) {
-    if (mutation.addedNodes.length > 0) {
-      const updatedPostsCount = [...mutation.addedNodes].filter(
-        (node) => node.nodeName === 'ARTICLE'
-      ).length;
+    if (mutation.addedNodes.length === 0) continue;
 
-      countEl.textContent = updatedPostsCount;
-    }
+    const newPostsCount = [...mutation.addedNodes].filter(
+      (node) => node.nodeName === 'ARTICLE'
+    ).length;
+
+    if (newPostsCount === 0) continue;
+
+    const currentPostsCount = Number(countEl.textContent);
+    countEl.textContent = currentPostsCount + newPostsCount;
   }
 });
 
@@ -47,15 +50,16 @@ async function loadPosts() {
 
 function renderPosts(posts) {
   const postElements = posts.map((post) => {
-    return `
-      <article style="background-color: ${
-        backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
-      }">
-        <h2>${post.title}</h2>
-        <p>${post.body}</p>
-      </article>
+    const article = document.createElement('article');
+    article.style.backgroundColor =
+      backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
+    article.innerHTML = `
+      <h2>${post.title}</h2>
+      <p>${post.body}</p>
     `;
+
+    return article;
   });
 
-  postsContainer.innerHTML += postElements.join('');
+  postsContainer.append(...postElements);
 }
