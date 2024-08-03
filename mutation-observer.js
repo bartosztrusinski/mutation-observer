@@ -1,5 +1,6 @@
 const postsContainer = document.querySelector('.posts');
 const button = document.querySelector('button');
+const countEl = document.querySelector('.count');
 const backgroundColors = [
   '#229954',
   '#3498db',
@@ -10,7 +11,21 @@ const backgroundColors = [
   '#e74c3c',
 ];
 
-const observer = new MutationObserver((mutations) => {});
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    if (mutation.addedNodes.length > 0) {
+      const updatedPostsCount = [...mutation.addedNodes].filter(
+        (node) => node.nodeName === 'ARTICLE'
+      ).length;
+
+      countEl.textContent = updatedPostsCount;
+    }
+  }
+});
+
+observer.observe(postsContainer, {
+  childList: true,
+});
 
 button.addEventListener('click', async () => {
   const posts = await loadPosts();
@@ -20,9 +35,7 @@ button.addEventListener('click', async () => {
 async function loadPosts() {
   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
   const data = await response.json();
-  const postsToLoad = Math.floor(Math.random() * 10) + 3;
-  console.log(postsToLoad);
-
+  const postsToLoad = Math.floor(Math.random() * 8) + 3;
   const startIndex = Math.min(
     Math.floor(Math.random() * data.length),
     data.length - postsToLoad
