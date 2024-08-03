@@ -13,16 +13,27 @@ const backgroundColors = [
 
 const observer = new MutationObserver((mutations) => {
   for (const mutation of mutations) {
-    if (mutation.addedNodes.length === 0) continue;
+    if (mutation.removedNodes.length > 0) {
+      const removedPostsCount = [...mutation.removedNodes].filter(
+        (node) => node.nodeName === 'ARTICLE'
+      ).length;
 
-    const newPostsCount = [...mutation.addedNodes].filter(
-      (node) => node.nodeName === 'ARTICLE'
-    ).length;
+      if (removedPostsCount > 0) {
+        const currentPostsCount = Number(countEl.textContent);
+        countEl.textContent = currentPostsCount - removedPostsCount;
+      }
+    }
 
-    if (newPostsCount === 0) continue;
+    if (mutation.addedNodes.length > 0) {
+      const newPostsCount = [...mutation.addedNodes].filter(
+        (node) => node.nodeName === 'ARTICLE'
+      ).length;
 
-    const currentPostsCount = Number(countEl.textContent);
-    countEl.textContent = currentPostsCount + newPostsCount;
+      if (newPostsCount > 0) {
+        const currentPostsCount = Number(countEl.textContent);
+        countEl.textContent = currentPostsCount + newPostsCount;
+      }
+    }
   }
 });
 
@@ -51,12 +62,20 @@ async function loadPosts() {
 function renderPosts(posts) {
   const postElements = posts.map((post) => {
     const article = document.createElement('article');
+    const hideButton = document.createElement('button');
+
     article.style.backgroundColor =
       backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
+
     article.innerHTML = `
       <h2>${post.title}</h2>
       <p>${post.body}</p>
-    `;
+      `;
+
+    hideButton.textContent = 'Hide';
+    hideButton.addEventListener('click', () => article.remove());
+
+    article.append(hideButton);
 
     return article;
   });
