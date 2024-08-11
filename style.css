@@ -12,12 +12,13 @@ body {
 
 button {
   display: block;
-  margin: 2rem auto;
+  margin: 0 auto;
   background-color: #333;
   color: #f4f4f4;
   font-size: 1rem;
   padding: 0.4rem 1rem;
-  border: 1px solid #f4f4f4;
+  border: 2px solid #f4f4f4;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 
@@ -29,8 +30,15 @@ main {
   width: min(100%, 40rem);
   margin: 1rem auto;
 }
+
+button.load {
+  position: sticky;
+  top: 2rem;
+  z-index: 100;
+}
+
 .counter {
-  margin-bottom: 1rem;
+  margin: 3.5rem 0.5rem 1rem 0;
   font-size: 1.2rem;
   text-align: right;
 }
@@ -50,6 +58,14 @@ main {
   color: #111;
   padding: 1rem;
   border-radius: 0.4rem;
+  transform: scale(0);
+  opacity: 0;
+  transition: 180ms all linear;
+}
+
+.posts article.visible {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .posts article button {
