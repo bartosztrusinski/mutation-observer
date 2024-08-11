@@ -1,7 +1,7 @@
 const postsContainer = document.querySelector('.posts');
 const countEl = document.querySelector('.count');
 
-const observer = new MutationObserver((mutations) => {
+const mutationObserver = new MutationObserver((mutations) => {
   for (const mutation of mutations) {
     if (mutation.removedNodes.length > 0) {
       const removedPostsCount = [...mutation.removedNodes].filter(
@@ -27,4 +27,4 @@ const observer = new MutationObserver((mutations) => {
   }
 });
 
-observer.observe(postsContainer, { childList: true });
+mutationObserver.observe(postsContainer, { childList: true });
