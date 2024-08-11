@@ -1,3 +1,5 @@
+import intersectionObserver from './intersection-observer.js';
+
 const postsContainer = document.querySelector('.posts');
 const button = document.querySelector('button');
 const backgroundColors = [
@@ -35,6 +37,7 @@ function renderPosts(posts) {
 
     article.style.backgroundColor =
       backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
+    intersectionObserver.observe(article);
 
     article.innerHTML = `
       <h2>${post.title}</h2>
@@ -42,7 +45,10 @@ function renderPosts(posts) {
       `;
 
     hideButton.textContent = 'Hide';
-    hideButton.addEventListener('click', () => article.remove());
+    hideButton.addEventListener('click', () => {
+      article.classList.remove('visible');
+      setTimeout(() => article.remove(), 180);
+    });
 
     article.append(hideButton);
 
@@ -50,4 +56,5 @@ function renderPosts(posts) {
   });
 
   postsContainer.append(...postElements);
+  document.body.scrollIntoView({ behavior: 'smooth' });
 }

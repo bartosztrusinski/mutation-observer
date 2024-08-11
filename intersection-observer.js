@@ -1,5 +1,3 @@
-const posts = document.querySelectorAll('.post > article');
-
 const intersectionObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -8,7 +6,5 @@ const intersectionObserver = new IntersectionObserver(
   },
   { threshold: 0.5 }
 );
-
-posts.forEach((post) => intersectionObserver.observe(post));
 
 export default intersectionObserver;
