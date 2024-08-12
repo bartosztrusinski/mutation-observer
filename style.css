@@ -27,7 +27,7 @@ button:hover {
 }
 
 main {
-  width: min(100%, 40rem);
+  width: min(100%, 60rem);
   margin: 1rem auto;
 }
 
@@ -45,14 +45,32 @@ button.load {
 
 .posts {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 3rem;
+  margin-inline: 1rem;
+}
+
+@media (min-width: 750px) {
+  .posts {
+    flex-direction: row;
+    margin-inline: 2rem;
+  }
+
+  .posts article {
+    flex: 1 1 45%;
+  }
+
+  .posts article button {
+    margin-top: 2rem;
+  }
 }
 
 .posts article {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.5rem;
   line-height: 1.4;
   color: #111;
@@ -68,8 +86,23 @@ button.load {
   opacity: 1;
 }
 
+.posts article.small {
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+
+.posts article.small p {
+  display: none;
+}
+
 .posts article button {
   align-self: end;
   padding: 0.5rem 2rem;
   margin: 0;
+}
+
+.posts article.small button {
+  padding: 0.5rem 1rem;
 }
