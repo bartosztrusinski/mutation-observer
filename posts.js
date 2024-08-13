@@ -1,6 +1,3 @@
-import intersectionObserver from './intersection-observer.js';
-import resizeObserver from './resize-observer.js';
-
 const postsContainer = document.querySelector('.posts');
 const button = document.querySelector('button');
 const backgroundColors = [
@@ -38,8 +35,6 @@ function renderPosts(posts) {
 
     article.style.backgroundColor =
       backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
-    intersectionObserver.observe(article);
-    resizeObserver.observe(article);
 
     article.innerHTML = `
       <h2>${post.title}</h2>
